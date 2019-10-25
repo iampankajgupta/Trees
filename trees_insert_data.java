@@ -1,64 +1,47 @@
 package sample;
+class Node {
+	Node right;
+	Node left;
+	int data;
+}
 
-public class Traversal {
+class BST {
+	public Node createNewNode(int data) {
+		Node a = new Node();
+		a.data = data;
+		a.left = null;
+		a.right = null;
+
+		return a;
+	}
+
+	public Node insertData(Node node, int data) {
+		if (node == null) {
+			return createNewNode(data);
+		}
+		if(data<=node.data) {
+			node.left = insertData(node.left,data);
+		}else {
+			node.right = insertData(node.right,data);
+		}
+		return node;
+	}
+
+	public boolean search(Node root, int data) {
+		if (root == null)
+			return false;
+		else if (root.data == data)
+			return true;
+		else if (data <= root.data)
+			return search(root.left, data);
+		else
+			return search(root.right, data);
+	}
 	
-	class Node{
-		int data;
-		Node right;
-		Node left;
-	}
-	static Node head;
-  
-                       // Insert data in the tree 
-  
-	public void insert_data(int data) {
-		Node new_Node = new Node();
-		new_Node.data = data;
-		new_Node.left = null;
-		new_Node.right = null;
-		if(head==null) {
-			head = new_Node;
-			return;
-		}
-		else {
-			Node pointer = head;
-			while(pointer.left!=null && pointer.right!=null) {
-				if(new_Node.data<=pointer.data) {
-					pointer = pointer.left;
-				}
-				else pointer = pointer.right;
-			}
-			if(new_Node.data<pointer.data) {
-				pointer.left = new_Node;
-			}
-			else {
-				pointer.right = new_Node;
-			}
-		}
-	}
-             // Search elements in  the tree
-             
-	public void search(int data) {
-		Node pointer = head;
-		while(pointer.left!=null ||  pointer.right!=null) {
-			if(pointer.data == data) {
-				System.out.println("Number found");
-				return;
-			}
-			else if(data<pointer.data) {
-				pointer = pointer.left;
-			}
-			else {
-				pointer = pointer.right;
-			}
-		}
-		if(pointer.data==data) {
-			System.out.println("found");
-		}
-		else {
-			System.out.println("not found");
-		}
-	}
+	
+	
+// 	Tree Traversal 
+	
 	public void PreOrder(Node head){
 		if(head==null){
 		return;
@@ -67,6 +50,7 @@ public class Traversal {
 		PreOrder(head.left);
 		ProOrder(head.right);
 	}
+	
 	public void PostOrder(Node root){
 		if(head==null) return;
 		PostOrder(head.left);
@@ -75,6 +59,7 @@ public class Traversal {
 		
 
 	}
+	
 	public void InOrder(Node head){
 		if(head==null) return;
 		
@@ -83,22 +68,23 @@ public class Traversal {
 		InOrder(head.right);
 		
 	}
+}
+
+
+public class Traversal {
 	public static void main(String[] args) {
-		Traversal obj = new Traversal();
-		Node head = null;
-		obj.insert_data(11);
-		obj.insert_data(6);
-		obj.insert_data(8);
-		obj.insert_data(19);
-		obj.insert_data(4);
-		obj.insert_data(10);
-		obj.insert_data(5);
-		obj.insert_data(17);
-		obj.insert_data(43);
-		obj.insert_data(49);
-		obj.insert_data(31);
-		
-		obj.search(13);
+		BST a = new BST();
+		Node root = null;
+		root = a.insertData(root,6);
+		root = a.insertData(root,12);
+		root = a.insertData(root,4);
+		root = a.insertData(root,9);
+		root = a.insertData(root,2);
+		if(a.search(root,2)==true){
+		System.out.println("Number found");
+		}else{
+		System.out.println("Number not found");
+		}
 		
 	
 	}
