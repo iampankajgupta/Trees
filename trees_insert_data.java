@@ -59,7 +59,30 @@ public class Traversal {
 			System.out.println("not found");
 		}
 	}
-	
+	public void PreOrder(Node head){
+		if(head==null){
+		return;
+		}
+		System.out.println(head.data);
+		PreOrder(head.left);
+		ProOrder(head.right);
+	}
+	public void PostOrder(Node root){
+		if(head==null) return;
+		PostOrder(head.left);
+		PostOrder(head.right);
+		System.out.println(head.data);
+		
+
+	}
+	public void InOrder(Node head){
+		if(head==null) return;
+		
+		InOrder(head.left);
+		System.out.println(head.data);
+		InOrder(head.right);
+		
+	}
 	public static void main(String[] args) {
 		Traversal obj = new Traversal();
 		Node head = null;
