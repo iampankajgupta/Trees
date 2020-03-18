@@ -110,12 +110,74 @@ public class Trie {
 		
 	}
 	
+		
 	public void DeleteKey(String key) {
-		if(key==null) {
+		if(root==null || key==null) {
 			return;
 		}
+		deleteHelper(key,root,key.length(),0);
+		return;
+	}
+	
+	
+	private boolean deleteHelper(String key, TrieNode currentNode, int length, int level) {
+		// TODO Auto-generated method stub
+		boolean deletedSelf = false;
+		if(currentNode==null) {
+			System.out.println("key doesn't exists");
+			return deletedSelf;
+		}
+		
+		if (level==length) {
+			if(hasNoChildren(currentNode)) {
+				currentNode=null;
+				deletedSelf = true;
+			}else {
+				currentNode.unMarkAsLeaf();
+				deletedSelf = false;
+			}
+			
+		}	
+		else {
+			TrieNode childNode = currentNode.children[getIndex(key.charAt(level))];
+			boolean childDeleted = deleteHelper(key, childNode, length, level + 1);
+			
+			if (childDeleted) {
+				 
+				currentNode.children[getIndex(key.charAt(level))] = null; 	
+				
+				if (currentNode.isLeafNode) {
+					deletedSelf = false;
+				}else if(!hasNoChildren(currentNode)) {
+					deletedSelf = false;
+				}else {
+					currentNode = null;
+					deletedSelf = true;
+				}
+				
+			}else {
+				deletedSelf = false;
+			}
+			
+		}
+		return deletedSelf;
+		
+		
+		
 		
 	}
+
+	private boolean hasNoChildren(TrieNode currentNode) {
+		// TODO Auto-generated method stub
+		for(int i = 0;i<currentNode.children.length;i++) {
+			if(currentNode.children[i]!=null) {
+				return false;
+			}
+		
+		}
+		return true;
+	}
+
 	
 	
 	public static void main(String[] args) {
